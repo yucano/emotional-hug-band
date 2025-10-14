@@ -185,6 +185,8 @@ const Dashboard = () => {
               organs={organs}
               onOrganSelect={handleOrganSelect}
               selectedOrgan={selectedOrgan}
+              suggestedOrgan={suggestedOrgan?.organName}
+              stressLevel={currentData?.stressLevel}
             />
             
             <OrganSuggestion
@@ -199,6 +201,8 @@ const Dashboard = () => {
             {selectedOrgan && interpretation ? (
               <InterpretationCard
                 organName={selectedOrgan.nombre}
+                organId={selectedOrgan.id}
+                interpretationId={(interpretation as any).id}
                 interpretation={interpretation}
               />
             ) : (

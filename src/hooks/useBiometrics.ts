@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAlerts } from "./useAlerts";
 
 export interface BiometricData {
   heartRate: number;
@@ -28,6 +29,7 @@ export const useBiometrics = (isConnected: boolean) => {
 
   const [history, setHistory] = useState<BiometricData[]>([]);
   const [suggestedOrgan, setSuggestedOrgan] = useState<SuggestedOrgan | null>(null);
+  const { checkAlerts } = useAlerts();
 
   useEffect(() => {
     if (!isConnected) {
@@ -48,6 +50,9 @@ export const useBiometrics = (isConnected: boolean) => {
 
       setCurrentData(newData);
       setHistory((prev) => [...prev.slice(-29), newData]); // Keep last 30 readings
+
+      // Verificar alertas
+      checkAlerts(newData);
 
       // Analizar datos y sugerir órgano
       const suggestion = analyzeBiometrics(newData);

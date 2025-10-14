@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      alertas_config: {
+        Row: {
+          alertas_habilitadas: boolean | null
+          created_at: string | null
+          id: string
+          umbral_heart_rate_max: number | null
+          umbral_heart_rate_min: number | null
+          umbral_hrv_min: number | null
+          umbral_stress_level: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          alertas_habilitadas?: boolean | null
+          created_at?: string | null
+          id?: string
+          umbral_heart_rate_max?: number | null
+          umbral_heart_rate_min?: number | null
+          umbral_hrv_min?: number | null
+          umbral_stress_level?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          alertas_habilitadas?: boolean | null
+          created_at?: string | null
+          id?: string
+          umbral_heart_rate_max?: number | null
+          umbral_heart_rate_min?: number | null
+          umbral_hrv_min?: number | null
+          umbral_stress_level?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      favoritos_interpretaciones: {
+        Row: {
+          created_at: string | null
+          id: string
+          interpretacion_id: string
+          notas_usuario: string | null
+          organo_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          interpretacion_id: string
+          notas_usuario?: string | null
+          organo_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          interpretacion_id?: string
+          notas_usuario?: string | null
+          organo_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favoritos_interpretaciones_interpretacion_id_fkey"
+            columns: ["interpretacion_id"]
+            isOneToOne: false
+            referencedRelation: "interpretaciones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "favoritos_interpretaciones_organo_id_fkey"
+            columns: ["organo_id"]
+            isOneToOne: false
+            referencedRelation: "organos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       interpretaciones: {
         Row: {
           afirmacion_positiva: string

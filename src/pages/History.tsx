@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StatsCard } from "@/components/StatsCard";
 import { HistoricalCharts } from "@/components/HistoricalCharts";
 import { OrganTimeline } from "@/components/OrganTimeline";
+import { ExportReport } from "@/components/ExportReport";
 import { useHistoricalData } from "@/hooks/useHistoricalData";
 import { ArrowLeft, Heart, Brain, Activity, TrendingUp, Target, BarChart3 } from "lucide-react";
 
@@ -79,8 +80,11 @@ const History = () => {
 
         {stats ? (
           <>
+            {/* Export Report Section */}
+            <ExportReport readings={readings} timeRange={timeRange} />
+
             {/* Statistics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 mb-8">
               <StatsCard
                 title="Frecuencia Cardíaca Promedio"
                 value={`${stats.avgHeartRate} BPM`}

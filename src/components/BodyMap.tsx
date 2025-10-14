@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Organ {
   id: string;
@@ -15,10 +16,36 @@ interface BodyMapProps {
   organs: Organ[];
   onOrganSelect: (organ: Organ) => void;
   selectedOrgan?: Organ | null;
+  suggestedOrgan?: string | null;
+  stressLevel?: number;
 }
 
-export const BodyMap = ({ organs, onOrganSelect, selectedOrgan }: BodyMapProps) => {
+export const BodyMap = ({ 
+  organs, 
+  onOrganSelect, 
+  selectedOrgan,
+  suggestedOrgan,
+  stressLevel = 0
+}: BodyMapProps) => {
   const [hoveredOrgan, setHoveredOrgan] = useState<Organ | null>(null);
+  const [pulseOrgan, setPulseOrgan] = useState<string | null>(null);
+
+  // Efecto de pulsación para órgano sugerido
+  useEffect(() => {
+    if (suggestedOrgan) {
+      setPulseOrgan(suggestedOrgan);
+      const timer = setTimeout(() => setPulseOrgan(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [suggestedOrgan]);
+
+  // Determinar intensidad del mapa de calor basado en estrés
+  const getStressIntensity = () => {
+    if (stressLevel > 80) return 0.7;
+    if (stressLevel > 60) return 0.5;
+    if (stressLevel > 40) return 0.3;
+    return 0.1;
+  };
 
   return (
     <Card className="p-6 bg-gradient-to-br from-background to-secondary/20">
@@ -202,44 +229,98 @@ export const BodyMap = ({ organs, onOrganSelect, selectedOrgan }: BodyMapProps) 
                      opacity="0.7"
                      filter="url(#soft3DShadow)" />
             
+            {/* Efecto de mapa de calor si hay estrés elevado */}
+            {stressLevel > 40 && (
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="100"
+                fill="hsl(var(--destructive))"
+                opacity={getStressIntensity()}
+                className="pointer-events-none animate-pulse"
+              />
+            )}
+
             {/* Puntos de órganos interactivos */}
-            {organs.map((organ) => {
-              const isSelected = selectedOrgan?.id === organ.id;
-              const isHovered = hoveredOrgan?.id === organ.id;
-              const scale = isSelected ? 1.5 : isHovered ? 1.3 : 1;
-              
-              return (
-                <g key={organ.id}>
-                  <circle
-                    cx={organ.coordenada_x}
-                    cy={organ.coordenada_y}
-                    r={organ.radio_deteccion / 2}
-                    fill={isSelected ? "hsl(var(--primary))" : isHovered ? "hsl(var(--healing))" : "hsl(var(--primary))"}
-                    opacity={isSelected ? 0.9 : isHovered ? 0.7 : 0.6}
-                    stroke="hsl(var(--background))"
-                    strokeWidth="0.5"
-                    className="cursor-pointer transition-all duration-300"
-                    style={{
-                      transform: `scale(${scale})`,
-                      transformOrigin: `${organ.coordenada_x}% ${organ.coordenada_y}%`,
-                    }}
-                    onMouseEnter={() => setHoveredOrgan(organ)}
-                    onMouseLeave={() => setHoveredOrgan(null)}
-                    onClick={() => onOrganSelect(organ)}
-                  />
-                  {(isHovered || isSelected) && (
-                    <text
-                      x={organ.coordenada_x}
-                      y={organ.coordenada_y - 3}
-                      textAnchor="middle"
-                      className="text-[3px] font-medium fill-foreground pointer-events-none"
-                    >
-                      {organ.nombre}
-                    </text>
-                  )}
-                </g>
-              );
-            })}
+            <TooltipProvider>
+              {organs.map((organ) => {
+                const isSelected = selectedOrgan?.id === organ.id;
+                const isHovered = hoveredOrgan?.id === organ.id;
+                const isSuggested = suggestedOrgan === organ.nombre;
+                const isPulsing = pulseOrgan === organ.nombre;
+                const scale = isSelected ? 1.5 : isHovered ? 1.3 : 1;
+                
+                return (
+                  <g key={organ.id}>
+                    {/* Anillo de pulsación para órgano sugerido */}
+                    {isPulsing && (
+                      <circle
+                        cx={organ.coordenada_x}
+                        cy={organ.coordenada_y}
+                        r={organ.radio_deteccion}
+                        fill="none"
+                        stroke="hsl(var(--healing))"
+                        strokeWidth="0.5"
+                        opacity="0.8"
+                        className="animate-[ping_1.5s_ease-in-out_infinite]"
+                      />
+                    )}
+                    
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <circle
+                          cx={organ.coordenada_x}
+                          cy={organ.coordenada_y}
+                          r={organ.radio_deteccion / 2}
+                          fill={
+                            isSelected 
+                              ? "hsl(var(--primary))" 
+                              : isSuggested 
+                              ? "hsl(var(--healing))" 
+                              : isHovered 
+                              ? "hsl(var(--healing))" 
+                              : "hsl(var(--primary))"
+                          }
+                          opacity={isSelected ? 0.9 : isHovered || isSuggested ? 0.8 : 0.6}
+                          stroke="hsl(var(--background))"
+                          strokeWidth="0.5"
+                          className="cursor-pointer transition-all duration-300 hover:brightness-110"
+                          style={{
+                            transform: `scale(${scale})`,
+                            transformOrigin: `${organ.coordenada_x}% ${organ.coordenada_y}%`,
+                            animation: isPulsing ? "pulse 2s ease-in-out infinite" : "none",
+                          }}
+                          onMouseEnter={() => setHoveredOrgan(organ)}
+                          onMouseLeave={() => setHoveredOrgan(null)}
+                          onClick={() => onOrganSelect(organ)}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="text-xs">
+                        <p className="font-semibold">{organ.nombre}</p>
+                        <p className="text-muted-foreground">{organ.zona_principal}</p>
+                        {isSuggested && (
+                          <Badge variant="default" className="mt-1 text-xs bg-[hsl(var(--healing))]">
+                            ✨ Sugerido
+                          </Badge>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+
+                    {(isHovered || isSelected) && (
+                      <text
+                        x={organ.coordenada_x}
+                        y={organ.coordenada_y - 3}
+                        textAnchor="middle"
+                        className="text-[3px] font-medium fill-foreground pointer-events-none animate-in fade-in"
+                      >
+                        {organ.nombre}
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
+            </TooltipProvider>
           </svg>
         </div>
         
