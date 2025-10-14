@@ -8,6 +8,9 @@ interface Interpretation {
   patron_emocional: string;
   afirmacion_positiva: string;
   fuente_manual: string;
+  sentido_biologico?: string;
+  etapa_embrionaria?: string;
+  conflicto_adicional?: string;
 }
 
 interface InterpretationCardProps {
@@ -29,6 +32,23 @@ export const InterpretationCard = ({ organName, interpretation }: Interpretation
       </div>
 
       <div className="space-y-4">
+        {interpretation.sentido_biologico && (
+          <div className="space-y-2 bg-primary/5 p-4 rounded-lg">
+            <div className="flex items-center gap-2 text-primary">
+              <Brain className="w-4 h-4" />
+              <span className="text-sm font-semibold">Sentido Biológico</span>
+              {interpretation.etapa_embrionaria && (
+                <Badge variant="outline" className="ml-auto text-xs">
+                  {interpretation.etapa_embrionaria}
+                </Badge>
+              )}
+            </div>
+            <p className="text-foreground leading-relaxed text-sm">
+              {interpretation.sentido_biologico}
+            </p>
+          </div>
+        )}
+
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-muted-foreground">
             <Brain className="w-4 h-4" />
@@ -47,6 +67,18 @@ export const InterpretationCard = ({ organName, interpretation }: Interpretation
             </div>
             <p className="text-foreground leading-relaxed pl-6">
               {interpretation.patron_emocional}
+            </p>
+          </div>
+        )}
+
+        {interpretation.conflicto_adicional && (
+          <div className="space-y-2 bg-secondary/50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 text-foreground">
+              <Heart className="w-4 h-4" />
+              <span className="text-sm font-semibold">Conflictos Emocionales Profundos</span>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {interpretation.conflicto_adicional}
             </p>
           </div>
         )}
