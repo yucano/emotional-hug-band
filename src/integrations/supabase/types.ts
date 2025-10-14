@@ -18,31 +18,40 @@ export type Database = {
         Row: {
           afirmacion_positiva: string
           causa_probable: string
+          conflicto_adicional: string | null
           created_at: string | null
+          etapa_embrionaria: string | null
           fuente_manual: string | null
           id: string
           organo_id: string | null
           patron_emocional: string | null
+          sentido_biologico: string | null
           sintoma: string
         }
         Insert: {
           afirmacion_positiva: string
           causa_probable: string
+          conflicto_adicional?: string | null
           created_at?: string | null
+          etapa_embrionaria?: string | null
           fuente_manual?: string | null
           id?: string
           organo_id?: string | null
           patron_emocional?: string | null
+          sentido_biologico?: string | null
           sintoma: string
         }
         Update: {
           afirmacion_positiva?: string
           causa_probable?: string
+          conflicto_adicional?: string | null
           created_at?: string | null
+          etapa_embrionaria?: string | null
           fuente_manual?: string | null
           id?: string
           organo_id?: string | null
           patron_emocional?: string | null
+          sentido_biologico?: string | null
           sintoma?: string
         }
         Relationships: [
