@@ -8,7 +8,7 @@ import { BiometricPanel } from "@/components/BiometricPanel";
 import { BiometricCharts } from "@/components/BiometricCharts";
 import { OrganSuggestion } from "@/components/OrganSuggestion";
 import { useBiometrics } from "@/hooks/useBiometrics";
-import { LogOut, Bluetooth, Activity, TrendingUp } from "lucide-react";
+import { LogOut, Bluetooth, Activity, TrendingUp, History as HistoryIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -146,6 +146,15 @@ const Dashboard = () => {
           </div>
           
           <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate("/history")}
+              className="gap-2"
+            >
+              <HistoryIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Historial</span>
+            </Button>
             <Button
               variant="outline"
               size="sm"
