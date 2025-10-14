@@ -1,0 +1,80 @@
+{
+  "app": {
+    "title": "Lumen Project",
+    "subtitle": "Biodecoding with Biometric Monitoring"
+  },
+  "auth": {
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Log Out",
+    "email": "Email",
+    "password": "Password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connectBracelet": "Connect Bracelet",
+    "disconnect": "Disconnect",
+    "connected": "Connected",
+    "notConnected": "Not Connected"
+  },
+  "biometrics": {
+    "heartRate": "Heart Rate",
+    "hrv": "HRV Variability",
+    "temperature": "Temperature",
+    "gsr": "Galvanic Response",
+    "stress": "Stress Level",
+    "bpm": "bpm",
+    "ms": "ms",
+    "celsius": "°C",
+    "kohm": "kΩ"
+  },
+  "organs": {
+    "suggested": "Suggested Organ",
+    "select": "Select organ",
+    "noSuggestion": "No suggestions"
+  },
+  "interpretation": {
+    "title": "Emotional Interpretation",
+    "symptoms": "Symptoms",
+    "probableCauses": "Probable Causes",
+    "affirmations": "Positive Affirmations",
+    "recommendations": "Recommendations",
+    "practices": "Suggested Practices",
+    "exercises": "Exercises",
+    "resources": "Resources",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites"
+  },
+  "history": {
+    "title": "History",
+    "timeRange": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "all": "All"
+    },
+    "stats": {
+      "avgHeartRate": "Avg Heart Rate",
+      "avgStress": "Avg Stress",
+      "avgHRV": "Avg HRV",
+      "totalReadings": "Total Readings",
+      "mostSuggested": "Most Suggested Organ"
+    },
+    "charts": "Charts",
+    "timeline": "Timeline",
+    "export": "Export Report",
+    "noData": "No historical data"
+  },
+  "alerts": {
+    "highHeartRate": "High heart rate detected",
+    "lowHRV": "Low HRV detected",
+    "highStress": "High stress level",
+    "connected": "Bracelet connected successfully",
+    "disconnected": "Bracelet disconnected"
+  },
+  "errors": {
+    "connection": "Connection error",
+    "bluetoothNotSupported": "Bluetooth not supported in this browser",
+    "loadingData": "Error loading data"
+  }
+}

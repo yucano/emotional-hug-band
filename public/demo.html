@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Lumen - Biodecoding con Pulsera Biométrica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .tech-stack {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .tech-stack h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .cta {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .architecture {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .architecture h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .flow-diagram {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .flow-step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 Proyecto Lumen</h1>
+            <p class="subtitle">Sistema de Biodecoding con Monitoreo Biométrico en Tiempo Real</p>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📡</div>
+                <h3>Conexión Bluetooth</h3>
+                <p>Conecta tu pulsera Lumen mediante Bluetooth para monitoreo en tiempo real de tus signos vitales.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💓</div>
+                <h3>Monitoreo Biométrico</h3>
+                <p>Frecuencia cardíaca, HRV, temperatura, GSR y niveles de estrés actualizados cada segundo.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Mapa Corporal Interactivo</h3>
+                <p>Visualización 3D del cuerpo humano con animaciones y efectos visuales que indican órganos sugeridos.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Interpretación Emocional</h3>
+                <p>Análisis profundo de la relación entre tus datos biométricos y estados emocionales.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚠️</div>
+                <h3>Sistema de Alertas</h3>
+                <p>Notificaciones inteligentes cuando tus valores biométricos salen de rangos normales.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Análisis Histórico</h3>
+                <p>Gráficos de evolución, estadísticas y líneas de tiempo para seguir tu progreso.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Sistema de Favoritos</h3>
+                <p>Guarda las interpretaciones más relevantes para consulta rápida.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>Recomendaciones Personalizadas</h3>
+                <p>Prácticas, ejercicios y recursos específicos para cada órgano y estado emocional.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📥</div>
+                <h3>Exportación de Reportes</h3>
+                <p>Genera reportes completos en CSV y PDF con todos tus datos y estadísticas.</p>
+            </div>
+        </div>
+
+        <div class="architecture">
+            <h2>🔄 Flujo de Funcionamiento</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div>
+                        <strong>Autenticación</strong>
+                        <p>El usuario inicia sesión de forma segura en la aplicación</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div>
+                        <strong>Conexión BLE</strong>
+                        <p>Se establece conexión Bluetooth con la pulsera Lumen</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div>
+                        <strong>Lectura de Sensores</strong>
+                        <p>Captura continua de datos: HR, HRV, temperatura, GSR y estrés</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div>
+                        <strong>Análisis Inteligente</strong>
+                        <p>Procesamiento de datos y detección de patrones anormales</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div>
+                        <strong>Sugerencia de Órgano</strong>
+                        <p>El sistema identifica órganos que requieren atención basándose en los datos</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">6</div>
+                    <div>
+                        <strong>Visualización Interactiva</strong>
+                        <p>El órgano sugerido pulsa en el mapa corporal 3D</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">7</div>
+                    <div>
+                        <strong>Interpretación Emocional</strong>
+                        <p>Muestra síntomas, causas probables, afirmaciones positivas y recomendaciones</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">8</div>
+                    <div>
+                        <strong>Persistencia de Datos</strong>
+                        <p>Toda la información se guarda en la base de datos para análisis histórico</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <h2>🛠️ Stack Tecnológico</h2>
+            <div class="tech-list">
+                <span class="tech-badge">React 18</span>
+                <span class="tech-badge">TypeScript</span>
+                <span class="tech-badge">Vite</span>
+                <span class="tech-badge">Tailwind CSS</span>
+                <span class="tech-badge">Supabase</span>
+                <span class="tech-badge">Recharts</span>
+                <span class="tech-badge">Radix UI</span>
+                <span class="tech-badge">React Router</span>
+                <span class="tech-badge">Web Bluetooth API</span>
+                <span class="tech-badge">TanStack Query</span>
+            </div>
+        </div>
+
+        <div class="cta">
+            <a href="/" class="cta-button">🚀 Abrir Aplicación</a>
+        </div>
+
+        <footer>
+            <p>Proyecto Lumen - Sistema completo de biodecoding con monitoreo biométrico</p>
+            <p>Todas las funcionalidades core implementadas y listas para producción</p>
+        </footer>
+    </div>
+</body>
+</html>

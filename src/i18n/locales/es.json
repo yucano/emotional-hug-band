@@ -1,0 +1,80 @@
+{
+  "app": {
+    "title": "Proyecto Lumen",
+    "subtitle": "Biodecoding con Monitoreo Biométrico"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connectBracelet": "Conectar Pulsera",
+    "disconnect": "Desconectar",
+    "connected": "Conectado",
+    "notConnected": "No conectado"
+  },
+  "biometrics": {
+    "heartRate": "Frecuencia Cardíaca",
+    "hrv": "Variabilidad (HRV)",
+    "temperature": "Temperatura",
+    "gsr": "Respuesta Galvánica",
+    "stress": "Nivel de Estrés",
+    "bpm": "lpm",
+    "ms": "ms",
+    "celsius": "°C",
+    "kohm": "kΩ"
+  },
+  "organs": {
+    "suggested": "Órgano Sugerido",
+    "select": "Seleccionar órgano",
+    "noSuggestion": "Sin sugerencias"
+  },
+  "interpretation": {
+    "title": "Interpretación Emocional",
+    "symptoms": "Síntomas",
+    "probableCauses": "Causas Probables",
+    "affirmations": "Afirmaciones Positivas",
+    "recommendations": "Recomendaciones",
+    "practices": "Prácticas Sugeridas",
+    "exercises": "Ejercicios",
+    "resources": "Recursos",
+    "addToFavorites": "Añadir a Favoritos",
+    "removeFromFavorites": "Quitar de Favoritos"
+  },
+  "history": {
+    "title": "Historial",
+    "timeRange": {
+      "day": "Día",
+      "week": "Semana",
+      "month": "Mes",
+      "all": "Todo"
+    },
+    "stats": {
+      "avgHeartRate": "FC Promedio",
+      "avgStress": "Estrés Promedio",
+      "avgHRV": "HRV Promedio",
+      "totalReadings": "Total de Lecturas",
+      "mostSuggested": "Órgano Más Sugerido"
+    },
+    "charts": "Gráficos",
+    "timeline": "Línea de Tiempo",
+    "export": "Exportar Reporte",
+    "noData": "Sin datos históricos"
+  },
+  "alerts": {
+    "highHeartRate": "Frecuencia cardíaca elevada",
+    "lowHRV": "HRV baja detectada",
+    "highStress": "Nivel de estrés alto",
+    "connected": "Pulsera conectada exitosamente",
+    "disconnected": "Pulsera desconectada"
+  },
+  "errors": {
+    "connection": "Error de conexión",
+    "bluetoothNotSupported": "Bluetooth no soportado en este navegador",
+    "loadingData": "Error cargando datos"
+  }
+}
