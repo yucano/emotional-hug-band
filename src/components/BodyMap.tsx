@@ -38,77 +38,169 @@ export const BodyMap = ({ organs, onOrganSelect, selectedOrgan }: BodyMapProps) 
             className="w-full h-full"
             style={{ filter: "drop-shadow(0 4px 6px var(--shadow-medium))" }}
           >
-            {/* Silueta corporal mejorada */}
+            {/* Silueta corporal 3D mejorada */}
             <defs>
-              <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
-                <stop offset="50%" stopColor="hsl(var(--healing))" stopOpacity="0.1" />
-                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+              {/* Gradiente 3D para la silueta */}
+              <linearGradient id="body3DGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
               </linearGradient>
-              <filter id="softGlow">
-                <feGaussianBlur stdDeviation="0.3" result="coloredBlur"/>
+              
+              {/* Gradiente de profundidad */}
+              <radialGradient id="depthGradient" cx="50%" cy="50%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+              </radialGradient>
+              
+              {/* Sombra suave para efecto 3D */}
+              <filter id="soft3DShadow">
+                <feGaussianBlur stdDeviation="0.5" result="coloredBlur"/>
+                <feOffset dx="0.2" dy="0.3" result="offsetBlur"/>
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="offsetBlur"/>
                   <feMergeNode in="SourceGraphic"/>
                 </feMerge>
               </filter>
             </defs>
             
-            {/* Cabeza más realista */}
-            <ellipse cx="50" cy="10" rx="7" ry="9" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" filter="url(#softGlow)" />
+            {/* Cabeza - más redondeada y realista */}
+            <ellipse cx="50" cy="8" rx="8" ry="10" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.85"
+                     filter="url(#soft3DShadow)" />
             
-            {/* Cuello con forma más natural */}
-            <path d="M 46 18 Q 48 22 50 23 Q 52 22 54 18" 
-                  fill="url(#bodyGradient)" 
+            {/* Cuello con volumen */}
+            <path d="M 45 17 L 45 23 Q 47 24 50 24 Q 53 24 55 23 L 55 17 Z" 
+                  fill="url(#body3DGradient)" 
                   stroke="hsl(var(--primary))" 
-                  strokeWidth="0.4" 
-                  opacity="0.8" />
+                  strokeWidth="0.3" 
+                  opacity="0.8"
+                  filter="url(#soft3DShadow)" />
             
-            {/* Hombros */}
-            <ellipse cx="35" cy="30" rx="6" ry="4" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" />
-            <ellipse cx="65" cy="30" rx="6" ry="4" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" />
+            {/* Hombros redondeados */}
+            <ellipse cx="34" cy="28" rx="7" ry="5" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.85"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="66" cy="28" rx="7" ry="5" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.85"
+                     filter="url(#soft3DShadow)" />
             
-            {/* Torso superior (pecho) */}
-            <path d="M 38 30 Q 32 35 32 45 Q 32 55 38 60 L 62 60 Q 68 55 68 45 Q 68 35 62 30 Z" 
-                  fill="url(#bodyGradient)" 
+            {/* Torso superior con forma anatómica */}
+            <path d="M 40 28 Q 34 32 32 40 Q 31 50 34 58 L 38 60 L 62 60 L 66 58 Q 69 50 68 40 Q 66 32 60 28 Z" 
+                  fill="url(#body3DGradient)" 
                   stroke="hsl(var(--primary))" 
-                  strokeWidth="0.4" 
-                  opacity="0.8" 
-                  filter="url(#softGlow)" />
+                  strokeWidth="0.3" 
+                  opacity="0.85"
+                  filter="url(#soft3DShadow)" />
             
-            {/* Brazos superiores */}
-            <ellipse cx="28" cy="40" rx="4" ry="12" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.7" />
-            <ellipse cx="72" cy="40" rx="4" ry="12" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.7" />
+            {/* Brazos superiores con volumen */}
+            <ellipse cx="27" cy="42" rx="4.5" ry="14" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.75"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="73" cy="42" rx="4.5" ry="14" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.75"
+                     filter="url(#soft3DShadow)" />
             
             {/* Antebrazos */}
-            <ellipse cx="25" cy="54" rx="3" ry="10" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
-            <ellipse cx="75" cy="54" rx="3" ry="10" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
+            <ellipse cx="24" cy="58" rx="3.5" ry="12" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.7"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="76" cy="58" rx="3.5" ry="12" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.7"
+                     filter="url(#soft3DShadow)" />
             
-            {/* Manos */}
-            <ellipse cx="24" cy="65" rx="2.5" ry="3" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
-            <ellipse cx="76" cy="65" rx="2.5" ry="3" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
-            
-            {/* Abdomen/Cintura */}
-            <path d="M 38 60 Q 35 65 36 70 L 64 70 Q 65 65 62 60 Z" 
-                  fill="url(#bodyGradient)" 
+            {/* Manos con más definición */}
+            <path d="M 22 69 Q 21 71 22 73 Q 23 72 24 71 Q 25 72 26 73 Q 27 71 26 69 Z" 
+                  fill="url(#depthGradient)" 
                   stroke="hsl(var(--primary))" 
-                  strokeWidth="0.4" 
-                  opacity="0.8" />
+                  strokeWidth="0.2" 
+                  opacity="0.7"
+                  filter="url(#soft3DShadow)" />
+            <path d="M 74 69 Q 73 71 74 73 Q 75 72 76 71 Q 77 72 78 73 Q 79 71 78 69 Z" 
+                  fill="url(#depthGradient)" 
+                  stroke="hsl(var(--primary))" 
+                  strokeWidth="0.2" 
+                  opacity="0.7"
+                  filter="url(#soft3DShadow)" />
             
-            {/* Caderas */}
-            <ellipse cx="50" cy="72" rx="16" ry="6" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" />
+            {/* Abdomen/Cintura con curvas naturales */}
+            <path d="M 38 60 Q 36 63 36 66 Q 36 69 38 71 L 62 71 Q 64 69 64 66 Q 64 63 62 60 Z" 
+                  fill="url(#body3DGradient)" 
+                  stroke="hsl(var(--primary))" 
+                  strokeWidth="0.3" 
+                  opacity="0.85"
+                  filter="url(#soft3DShadow)" />
             
-            {/* Muslos */}
-            <ellipse cx="43" cy="82" rx="5" ry="12" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" />
-            <ellipse cx="57" cy="82" rx="5" ry="12" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.8" />
+            {/* Caderas más definidas */}
+            <ellipse cx="50" cy="74" rx="15" ry="6" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.85"
+                     filter="url(#soft3DShadow)" />
             
-            {/* Piernas inferiores */}
-            <ellipse cx="42" cy="89" rx="4" ry="7" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.7" />
-            <ellipse cx="58" cy="89" rx="4" ry="7" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.7" />
+            {/* Muslos con volumen */}
+            <ellipse cx="42" cy="83" rx="5.5" ry="13" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.8"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="58" cy="83" rx="5.5" ry="13" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.3" 
+                     opacity="0.8"
+                     filter="url(#soft3DShadow)" />
             
-            {/* Pies */}
-            <ellipse cx="41" cy="97" rx="3" ry="2" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
-            <ellipse cx="59" cy="97" rx="3" ry="2" fill="url(#bodyGradient)" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.6" />
+            {/* Piernas inferiores (pantorrillas) */}
+            <ellipse cx="41" cy="92" rx="4" ry="6" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.75"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="59" cy="92" rx="4" ry="6" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.25" 
+                     opacity="0.75"
+                     filter="url(#soft3DShadow)" />
+            
+            {/* Pies con forma más realista */}
+            <ellipse cx="40" cy="98" rx="3.5" ry="1.8" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.2" 
+                     opacity="0.7"
+                     filter="url(#soft3DShadow)" />
+            <ellipse cx="60" cy="98" rx="3.5" ry="1.8" 
+                     fill="url(#depthGradient)" 
+                     stroke="hsl(var(--primary))" 
+                     strokeWidth="0.2" 
+                     opacity="0.7"
+                     filter="url(#soft3DShadow)" />
             
             {/* Puntos de órganos interactivos */}
             {organs.map((organ) => {
