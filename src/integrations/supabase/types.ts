@@ -64,6 +64,62 @@ export type Database = {
           },
         ]
       }
+      lecturas_biometricas: {
+        Row: {
+          created_at: string | null
+          gsr: number
+          heart_rate: number
+          hrv: number
+          id: string
+          organo_sugerido_confianza: number | null
+          organo_sugerido_id: string | null
+          organo_sugerido_nombre: string | null
+          organo_sugerido_razon: string | null
+          stress_level: number
+          temperature: number
+          timestamp: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          gsr: number
+          heart_rate: number
+          hrv: number
+          id?: string
+          organo_sugerido_confianza?: number | null
+          organo_sugerido_id?: string | null
+          organo_sugerido_nombre?: string | null
+          organo_sugerido_razon?: string | null
+          stress_level: number
+          temperature: number
+          timestamp?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          gsr?: number
+          heart_rate?: number
+          hrv?: number
+          id?: string
+          organo_sugerido_confianza?: number | null
+          organo_sugerido_id?: string | null
+          organo_sugerido_nombre?: string | null
+          organo_sugerido_razon?: string | null
+          stress_level?: number
+          temperature?: number
+          timestamp?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lecturas_biometricas_organo_sugerido_id_fkey"
+            columns: ["organo_sugerido_id"]
+            isOneToOne: false
+            referencedRelation: "organos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lecturas_sensor: {
         Row: {
           created_at: string | null

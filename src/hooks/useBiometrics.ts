@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface BiometricData {
   heartRate: number;
@@ -35,7 +36,7 @@ export const useBiometrics = (isConnected: boolean) => {
       return;
     }
 
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       const newData: BiometricData = {
         heartRate: Math.round(65 + Math.random() * 20 + Math.sin(Date.now() / 3000) * 10),
         hrv: Math.round(40 + Math.random() * 30),
@@ -49,40 +50,69 @@ export const useBiometrics = (isConnected: boolean) => {
       setHistory((prev) => [...prev.slice(-29), newData]); // Keep last 30 readings
 
       // Analizar datos y sugerir órgano
-      analyzeBiometrics(newData);
+      const suggestion = analyzeBiometrics(newData);
+      
+      // Guardar lectura en la base de datos (cada 10 segundos para no saturar)
+      if (Math.random() < 0.2) { // 20% de probabilidad = ~cada 10 seg
+        await saveBiometricReading(newData, suggestion);
+      }
     }, 2000);
 
     return () => clearInterval(interval);
   }, [isConnected]);
 
-  const analyzeBiometrics = (data: BiometricData) => {
+  const analyzeBiometrics = (data: BiometricData): SuggestedOrgan | null => {
+    let suggestion: SuggestedOrgan | null = null;
+    
     // Lógica para sugerir órganos basado en patrones biométricos
     if (data.heartRate > 85) {
-      setSuggestedOrgan({
+      suggestion = {
         organName: "Corazón",
         reason: "Frecuencia cardíaca elevada detectada",
         confidence: 75,
-      });
+      };
     } else if (data.stressLevel > 70) {
-      setSuggestedOrgan({
+      suggestion = {
         organName: "Estómago",
         reason: "Nivel de estrés alto - posible tensión digestiva",
         confidence: 65,
-      });
+      };
     } else if (data.gsr > 60 && data.hrv < 40) {
-      setSuggestedOrgan({
+      suggestion = {
         organName: "Garganta",
         reason: "Patrón de ansiedad comunicativa detectado",
         confidence: 60,
-      });
+      };
     } else if (data.temperature > 36.8) {
-      setSuggestedOrgan({
+      suggestion = {
         organName: "Hígado",
         reason: "Temperatura elevada - posible proceso de desintoxicación",
         confidence: 55,
+      };
+    }
+    
+    setSuggestedOrgan(suggestion);
+    return suggestion;
+  };
+
+  const saveBiometricReading = async (data: BiometricData, suggestion: SuggestedOrgan | null) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await supabase.from("lecturas_biometricas").insert({
+        user_id: user.id,
+        heart_rate: data.heartRate,
+        hrv: data.hrv,
+        temperature: data.temperature,
+        gsr: data.gsr,
+        stress_level: data.stressLevel,
+        organo_sugerido_nombre: suggestion?.organName || null,
+        organo_sugerido_razon: suggestion?.reason || null,
+        organo_sugerido_confianza: suggestion?.confidence || null,
       });
-    } else {
-      setSuggestedOrgan(null);
+    } catch (error) {
+      console.error("Error guardando lectura biométrica:", error);
     }
   };
 
