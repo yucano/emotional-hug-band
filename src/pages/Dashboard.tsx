@@ -24,6 +24,9 @@ interface Interpretation {
   patron_emocional: string;
   afirmacion_positiva: string;
   fuente_manual: string;
+  sentido_biologico?: string;
+  etapa_embrionaria?: string;
+  conflicto_adicional?: string;
 }
 
 const Dashboard = () => {
