@@ -4,10 +4,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BodyMap } from "@/components/BodyMap";
 import { InterpretationCard } from "@/components/InterpretationCard";
-import { LogOut, Bluetooth, Activity } from "lucide-react";
+import { BiometricPanel } from "@/components/BiometricPanel";
+import { BiometricCharts } from "@/components/BiometricCharts";
+import { OrganSuggestion } from "@/components/OrganSuggestion";
+import { useBiometrics } from "@/hooks/useBiometrics";
+import { LogOut, Bluetooth, Activity, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Organ {
   id: string;
@@ -36,6 +41,8 @@ const Dashboard = () => {
   const [interpretation, setInterpretation] = useState<Interpretation | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  const { currentData, history, suggestedOrgan } = useBiometrics(isConnected);
 
   useEffect(() => {
     checkUser();
@@ -100,8 +107,20 @@ const Dashboard = () => {
   };
 
   const simulateBLEConnection = () => {
-    setIsConnected(!isConnected);
-    toast.success(isConnected ? "Pulsera desconectada" : "Pulsera conectada");
+    const newStatus = !isConnected;
+    setIsConnected(newStatus);
+    toast.success(
+      newStatus 
+        ? "🔗 Pulsera Lumen conectada - Iniciando monitoreo biométrico" 
+        : "Pulsera desconectada"
+    );
+  };
+
+  const handleSuggestedOrgan = (organName: string) => {
+    const organ = organs.find(o => o.nombre === organName);
+    if (organ) {
+      handleOrganSelect(organ);
+    }
   };
 
   if (loading) {
@@ -121,8 +140,8 @@ const Dashboard = () => {
               <Activity className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold">Biodecodificador</h1>
-              <p className="text-xs text-muted-foreground">Emocional</p>
+              <h1 className="text-xl font-bold">Lumen</h1>
+              <p className="text-xs text-muted-foreground">Biodecodificación Emocional</p>
             </div>
           </div>
           
@@ -150,30 +169,24 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Left Column - Body Map */}
+          <div className="lg:col-span-1 space-y-6">
             <BodyMap
               organs={organs}
               onOrganSelect={handleOrganSelect}
               selectedOrgan={selectedOrgan}
             />
             
-            {isConnected && (
-              <Card className="p-4 bg-gradient-to-r from-[hsl(var(--healing))]/10 to-primary/10">
-                <div className="flex items-center gap-3">
-                  <Bluetooth className="w-5 h-5 text-[hsl(var(--healing))]" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">Pulsera Sensorial Conectada</p>
-                    <p className="text-xs text-muted-foreground">
-                      Toca tu cuerpo para detectar automáticamente
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            )}
+            <OrganSuggestion
+              suggestion={suggestedOrgan}
+              onSelectOrgan={handleSuggestedOrgan}
+              isConnected={isConnected}
+            />
           </div>
 
-          <div>
+          {/* Middle Column - Interpretation */}
+          <div className="lg:col-span-1">
             {selectedOrgan && interpretation ? (
               <InterpretationCard
                 organName={selectedOrgan.nombre}
@@ -192,6 +205,52 @@ const Dashboard = () => {
                     <p className="text-sm text-muted-foreground">
                       Haz clic en cualquier punto del mapa corporal para ver su interpretación emocional
                     </p>
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
+
+          {/* Right Column - Biometric Data */}
+          <div className="lg:col-span-1 space-y-6">
+            {isConnected ? (
+              <Tabs defaultValue="live" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="live">
+                    <Activity className="w-4 h-4 mr-2" />
+                    En Vivo
+                  </TabsTrigger>
+                  <TabsTrigger value="charts">
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    Gráficos
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="live" className="space-y-6 mt-6">
+                  <BiometricPanel data={currentData} isConnected={isConnected} />
+                </TabsContent>
+                
+                <TabsContent value="charts" className="space-y-6 mt-6">
+                  <BiometricCharts history={history} isConnected={isConnected} />
+                </TabsContent>
+              </Tabs>
+            ) : (
+              <Card className="p-12 text-center">
+                <div className="space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-secondary mx-auto flex items-center justify-center">
+                    <Bluetooth className="w-8 h-8 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">
+                      Conecta tu Pulsera Lumen
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Activa la conexión para comenzar el monitoreo biométrico en tiempo real
+                    </p>
+                    <Button onClick={simulateBLEConnection} className="gap-2">
+                      <Bluetooth className="w-4 h-4" />
+                      Conectar Ahora
+                    </Button>
                   </div>
                 </div>
               </Card>
