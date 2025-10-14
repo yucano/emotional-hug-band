@@ -14,7 +14,157 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      interpretaciones: {
+        Row: {
+          afirmacion_positiva: string
+          causa_probable: string
+          created_at: string | null
+          fuente_manual: string | null
+          id: string
+          organo_id: string | null
+          patron_emocional: string | null
+          sintoma: string
+        }
+        Insert: {
+          afirmacion_positiva: string
+          causa_probable: string
+          created_at?: string | null
+          fuente_manual?: string | null
+          id?: string
+          organo_id?: string | null
+          patron_emocional?: string | null
+          sintoma: string
+        }
+        Update: {
+          afirmacion_positiva?: string
+          causa_probable?: string
+          created_at?: string | null
+          fuente_manual?: string | null
+          id?: string
+          organo_id?: string | null
+          patron_emocional?: string | null
+          sintoma?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interpretaciones_organo_id_fkey"
+            columns: ["organo_id"]
+            isOneToOne: false
+            referencedRelation: "organos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lecturas_sensor: {
+        Row: {
+          created_at: string | null
+          duracion: number | null
+          id: string
+          notas_usuario: string | null
+          organo_detectado_id: string | null
+          presion: number | null
+          timestamp: string | null
+          tipo_toque: string | null
+          user_id: string | null
+          zona_ble: string
+        }
+        Insert: {
+          created_at?: string | null
+          duracion?: number | null
+          id?: string
+          notas_usuario?: string | null
+          organo_detectado_id?: string | null
+          presion?: number | null
+          timestamp?: string | null
+          tipo_toque?: string | null
+          user_id?: string | null
+          zona_ble: string
+        }
+        Update: {
+          created_at?: string | null
+          duracion?: number | null
+          id?: string
+          notas_usuario?: string | null
+          organo_detectado_id?: string | null
+          presion?: number | null
+          timestamp?: string | null
+          tipo_toque?: string | null
+          user_id?: string | null
+          zona_ble?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lecturas_sensor_organo_detectado_id_fkey"
+            columns: ["organo_detectado_id"]
+            isOneToOne: false
+            referencedRelation: "organos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organos: {
+        Row: {
+          coordenada_x: number | null
+          coordenada_y: number | null
+          created_at: string | null
+          descripcion: string | null
+          id: string
+          nombre: string
+          radio_deteccion: number | null
+          sistema_corporal: string | null
+          zona_principal: string
+        }
+        Insert: {
+          coordenada_x?: number | null
+          coordenada_y?: number | null
+          created_at?: string | null
+          descripcion?: string | null
+          id?: string
+          nombre: string
+          radio_deteccion?: number | null
+          sistema_corporal?: string | null
+          zona_principal: string
+        }
+        Update: {
+          coordenada_x?: number | null
+          coordenada_y?: number | null
+          created_at?: string | null
+          descripcion?: string | null
+          id?: string
+          nombre?: string
+          radio_deteccion?: number | null
+          sistema_corporal?: string | null
+          zona_principal?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          nombre: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          id: string
+          nombre?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          nombre?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
