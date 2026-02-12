@@ -1,5 +1,7 @@
 # Mejoras Técnicas Implementadas
 
+> © 2025 Adrián César Yucanovichi — Proyecto Lumen — Licencia GPL-3.0
+
 ## ✅ Implementaciones Completadas
 
 ### 1. Conexión BLE Real (Web Bluetooth API)
