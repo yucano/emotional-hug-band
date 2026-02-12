@@ -94,3 +94,9 @@
 **Última actualización:** 2025-10-14
 **Fases completadas:** ✅ Todas las fases principales (1-6) implementadas
 **Estado del proyecto:** 🎉 Funcionalidades core completadas - Listo para uso y futuras expansiones
+
+---
+
+## Licencia
+
+© 2025 Adrián César Yucanovichi. Este documento es parte del Proyecto Lumen, licenciado bajo **GPL-3.0**.

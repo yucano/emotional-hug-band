@@ -36,6 +36,14 @@ npm i
 npm run dev
 ```
 
+## Licencia
+
+Este proyecto está licenciado bajo la **GNU General Public License v3.0 (GPL-3.0)**.
+
+© 2025 Adrián César Yucanovichi. Todos los derechos reservados bajo los términos de la GPL-3.0.
+
+Consulta el archivo [LICENSE](./LICENSE) para más detalles.
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).

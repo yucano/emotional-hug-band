@@ -1,5 +1,7 @@
 # Guía de Hardware - Pulsera Lumen
 
+> © 2025 Adrián César Yucanovichi — Proyecto Lumen — Licencia GPL-3.0
+
 ## Diseño del Circuito
 
 ### Diagrama de Conexiones
