@@ -41,6 +41,15 @@ serve(async (req) => {
 
     const { organo_id, biometrics } = await req.json();
 
+    // Input validation
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!organo_id || typeof organo_id !== "string" || !uuidRegex.test(organo_id)) {
+      return new Response(JSON.stringify({ error: "ID de órgano inválido" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // RAG: fetch organ + interpretation data
     const { data: organ } = await supabase
       .from("organos")
@@ -54,7 +63,7 @@ serve(async (req) => {
       .eq("organo_id", organo_id);
 
     if (!organ) {
-      return new Response(JSON.stringify({ error: "Organ not found" }), {
+      return new Response(JSON.stringify({ error: "Órgano no encontrado" }), {
         status: 404,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -136,7 +145,7 @@ Por favor, genera una interpretación emocional profunda y personalizada para es
     });
   } catch (e) {
     console.error("ai-interpret error:", e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "Error procesando la solicitud. Por favor intenta nuevamente." }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
