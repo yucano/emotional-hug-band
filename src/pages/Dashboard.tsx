@@ -204,6 +204,7 @@ const Dashboard = () => {
                 organId={selectedOrgan.id}
                 interpretationId={(interpretation as any).id}
                 interpretation={interpretation}
+                biometrics={currentData}
               />
             ) : (
               <Card className="p-12 text-center">

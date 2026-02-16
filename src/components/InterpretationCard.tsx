@@ -2,9 +2,11 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Heart, Brain, Sparkles, Star, Lightbulb, Dumbbell, BookOpen, ExternalLink } from "lucide-react";
+import { Heart, Brain, Sparkles, Star, Lightbulb, Dumbbell, BookOpen, ExternalLink, Bot, Loader2 } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useAIInterpretation } from "@/hooks/useAIInterpretation";
 import { useState } from "react";
+import type { BiometricData } from "@/hooks/useBiometrics";
 
 interface Interpretation {
   sintoma: string;
@@ -22,6 +24,7 @@ interface InterpretationCardProps {
   organId: string;
   interpretationId: string;
   interpretation: Interpretation;
+  biometrics?: BiometricData | null;
 }
 
 // Recomendaciones específicas por órgano
@@ -97,13 +100,18 @@ export const InterpretationCard = ({
   organName, 
   organId,
   interpretationId,
-  interpretation 
+  interpretation,
+  biometrics
 }: InterpretationCardProps) => {
   const { isFavorite, toggleFavorite, loading } = useFavorites(interpretationId);
+  const { aiResponse, isLoading: aiLoading, interpret, clear } = useAIInterpretation();
   const [showRecommendations, setShowRecommendations] = useState(false);
   
   const recommendations = organRecommendations[organName] || organRecommendations.default;
 
+  const handleAIInterpret = () => {
+    interpret(organId, biometrics);
+  };
   return (
     <Card className="p-6 space-y-6 bg-gradient-to-br from-card to-secondary/10">
       <div className="space-y-2">
@@ -194,6 +202,41 @@ export const InterpretationCard = ({
 
         <Separator className="my-6" />
 
+        {/* Botón Interpretar con IA */}
+        <div className="space-y-4">
+          <Button
+            onClick={handleAIInterpret}
+            disabled={aiLoading}
+            className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(var(--healing))]"
+          >
+            {aiLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Bot className="w-4 h-4" />
+            )}
+            {aiLoading ? "Analizando..." : "🧠 Interpretar con IA"}
+          </Button>
+
+          {aiResponse && (
+            <div className="space-y-3 bg-gradient-to-br from-primary/5 to-[hsl(var(--healing))]/10 p-5 rounded-lg border border-primary/20 animate-in fade-in slide-in-from-bottom-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-primary">
+                  <Bot className="w-4 h-4" />
+                  <span className="text-sm font-semibold">Interpretación IA</span>
+                </div>
+                <Button variant="ghost" size="sm" onClick={clear} className="text-xs">
+                  Cerrar
+                </Button>
+              </div>
+              <div className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
+                {aiResponse}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Separator className="my-6" />
+
         {/* Recomendaciones y Ejercicios */}
         <div className="space-y-4">
           <Button
@@ -207,7 +250,6 @@ export const InterpretationCard = ({
 
           {showRecommendations && (
             <div className="space-y-6 animate-in fade-in slide-in-from-top-2">
-              {/* Prácticas Recomendadas */}
               <div className="space-y-3 bg-primary/5 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-primary">
                   <Lightbulb className="w-4 h-4" />
@@ -222,7 +264,6 @@ export const InterpretationCard = ({
                 </ul>
               </div>
 
-              {/* Ejercicios Sugeridos */}
               <div className="space-y-3 bg-[hsl(var(--healing))]/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-[hsl(var(--healing))]">
                   <Dumbbell className="w-4 h-4" />
@@ -237,7 +278,6 @@ export const InterpretationCard = ({
                 </ul>
               </div>
 
-              {/* Recursos Adicionales */}
               <div className="space-y-3 bg-secondary/50 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-foreground">
                   <BookOpen className="w-4 h-4" />
